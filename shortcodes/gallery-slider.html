@@ -1,11 +1,11 @@
 {{ if eq (.Get "fullscreen") "true" }}
-{{ $.Scratch.Add "width" "100%" }}
-{{ $.Scratch.Add "height" "100%" }}
-{{ $.Scratch.Add "position" "fixed" }}
+    {{ $.Scratch.Add "width" "100%" }}
+    {{ $.Scratch.Add "height" "100%" }}
+    {{ $.Scratch.Add "position" "fixed" }}
 {{else}}
-{{ $.Scratch.Add "width" (.Get "width" | default "500px") }}
-{{ $.Scratch.Add "height" (.Get "height" | default "300px") }}
-{{ $.Scratch.Add "position" "relative" }}
+    {{ $.Scratch.Add "width" (.Get "width" | default "500px") }}
+    {{ $.Scratch.Add "height" (.Get "height" | default "300px") }}
+    {{ $.Scratch.Add "position" "relative" }}
 {{end}}
 
 
