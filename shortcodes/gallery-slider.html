@@ -10,8 +10,15 @@
 
 
 {{ if ne (.Get "no-fa") "true" }}
+    <!-- FontAwesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 {{end}}
+
+{{ if ne (.Get "no-jquery") "true" }}
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+{{end}}
+
 
 <style>
 #slide-window {
@@ -79,7 +86,7 @@
 }
 </style>
 
-
+<!-- Gallery -->
 <div id="slide-window">
     <ol id="slides-list" start="1">
         {{- with (.Get "dir") -}} {{- $files := readDir (print "/static/" .) }} 
@@ -96,11 +103,6 @@
     <span class="nav fa fa-chevron-left fa-3x" id="left"></span>
     <span class="nav fa fa-chevron-right fa-3x" id="right"></span>
 </div>
-
-
-{{ if ne (.Get "no-jquery") "true" }}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
-{{end}}
 
 <script>
 sliderJQuery = jQuery.noConflict();
