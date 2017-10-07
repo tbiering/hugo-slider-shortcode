@@ -2,7 +2,7 @@
 A simple shortcode for hugo to add a gallery slider. It will fetch all images of a specified directory to display as a slideshow.
 
 ### Installation
-Copy the file(s) to the `hugo/layouts/shortcodes` folder.
+Copy the file `gallery-slider.html` to the `/layouts/shortcodes` folder of your hugo installation.
 
 ### Usage
 1. Place the images in a subfolder inside the `hugo/static` folder (for example `hugo/static/img/portfolio`).
@@ -22,13 +22,9 @@ Copy the file(s) to the `hugo/layouts/shortcodes` folder.
 | `no-jquery` | `false` | Toggles dependency inclusion for JQuery. If set to `true`, the dependency will be excluded from loading. |
 
 ### Examples
-```go
-{{< gallery-slider dir="/img/portfolio/" width="500px" height="250px" >}}
-```
+```{{< gallery-slider dir="/img/portfolio/" width="500px" height="250px" >}}```
 
-```go
-{{< gallery-slider dir="/img/portfolio/" fullscreen="true" >}}
-```
+```{{< gallery-slider dir="/img/portfolio/" fullscreen="true" >}}```
 
 ### Libraries used
 This shortcode automatically loads it's necessary dependencies unless disabled via configuration. Thanks to these awesome libraries:
