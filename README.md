@@ -31,6 +31,6 @@ Copy the file(s) to the `hugo/layouts/shortcodes` folder.
 ```
 
 ### Libraries used
-This shortcode automatically loads it's necessary dependencies unless disabled via configuration. Thanks to these awesome lib
+This shortcode automatically loads it's necessary dependencies unless disabled via configuration. Thanks to these awesome libraries:
 * FontAwesome 4.7.0
 * JQuery 
