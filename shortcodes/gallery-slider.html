@@ -1,0 +1,169 @@
+{{ if eq (.Get "fullscreen") "true" }}
+    {{ $.Scratch.Add "width" "100%" }}
+    {{ $.Scratch.Add "height" "100%" }}
+    {{ $.Scratch.Add "position" "fixed" }}
+{{else}}
+    {{ $.Scratch.Add "width" (.Get "width" | default "400px") }}
+    {{ $.Scratch.Add "height" (.Get "height" | default "200px") }}
+    {{ $.Scratch.Add "position" "relative" }}
+{{end}}
+
+<style>
+#slide-window {
+    position: {{ $.Scratch.Get "position" }};
+    width: {{ $.Scratch.Get "width" }};
+    height: {{ $.Scratch.Get "height" }};
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+}
+
+#slides {
+    width: {{ $.Scratch.Get "width" }};
+    height: {{ $.Scratch.Get "height" }};
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    transform: translate3d(0px, 0px, 0px);
+    transition: all 0.66s ease;
+    -webkit-transition: all 0.66s ease;
+}
+
+.slide {
+    list-style: none;
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: {{ $.Scratch.Get "width" }};
+    height: {{ $.Scratch.Get "height" }};
+    background: #ccc;
+    text-align: center;
+    line-height: 100%;
+    background-size: cover;
+    background-position: 50% 50%;
+    color: #fff;
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+}
+
+.alive {
+    visibility: visible;
+}
+
+.nav {
+    position: {{ $.Scratch.Get "position" }};
+    z-index: 9;
+    top: 45%;
+    cursor: pointer;
+    color: #fff;
+    opacity: 0.7;
+    transition: all 0.66s ease;
+    -webkit-transition: all 0.66s ease;
+}
+
+.nav:hover {
+    opacity: 1.0;
+}
+
+#left {
+    left: 3%;
+    float: left;
+}
+
+#right {
+    right: 3%;
+    float: right;
+}
+
+</style>
+
+
+<div id="slide-window">
+    <ol id="slides" start="1">
+        {{- with (.Get "dir") -}} {{- $files := readDir (print "/static/" .) }} 
+        {{- range $files -}} 
+        {{- $isimg := lower .Name | findRE "\\.(gif|jpg|jpeg|tiff|png|bmp)" }}
+        {{- $linkURL := print ($.Get "dir") "/" .Name | absURL }}
+        <!-- absolute URL to hi-res image -->
+        <li class="slide color-0 alive" style="background-image:url({{ $linkURL }});"></li>
+        {{- end }} 
+        {{- end }}
+
+    </ol>
+
+    <span class="nav fa fa-chevron-left fa-3x" id="left"></span>
+    <span class="nav fa fa-chevron-right fa-3x" id="right"></span>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" crossorigin="anonymous"></script>
+
+<script>
+
+sliderJQuery = jQuery.noConflict();
+sliderJQuery(function( $ ) {
+    $.global = new Object();
+
+    $.global.item = 1;
+    $.global.total = 0;
+
+    $(document).ready(function () {
+
+        var WindowWidth = $('#slide-window').width();
+        var SlideCount = $('#slides li').length;
+        var SlidesWidth = SlideCount * WindowWidth;
+
+        $.global.item = 0;
+        $.global.total = SlideCount;
+
+        $('.slide').css('width', WindowWidth + 'px');
+        $('#slides').css('width', SlidesWidth + 'px');
+        $("#slides li:nth-child(1)").addClass('alive');
+
+        $('#left').click(function () {
+            Slide('back');
+        });
+        $('#right').click(function () {
+            Slide('forward');
+        });
+
+    });
+
+    function Slide(direction) {
+        if (direction == 'back') {
+            var $target = $.global.item - 1;
+        }
+        if (direction == 'forward') {
+            var $target = $.global.item + 1;
+        }
+
+        if ($target == -1) {
+            DoIt($.global.total - 1);
+        } else if ($target == $.global.total) {
+            DoIt(0);
+        } else {
+            DoIt($target);
+        }
+    }
+
+    function DoIt(target) {
+
+        var $windowwidth = $('#slide-window').width();
+        var $margin = $windowwidth * target;
+        var $actualtarget = target + 1;
+
+        $("#slides li:nth-child(" + $actualtarget + ")").addClass('alive');
+
+        $('#slides').css('transform', 'translate3d(-' + $margin + 'px,0px,0px)');
+
+        $.global.item = target;
+
+        $('#count').html($.global.item + 1);
+
+    }
+});
+
+</script>
