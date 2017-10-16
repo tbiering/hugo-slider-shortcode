@@ -1,13 +1,5 @@
-{{ if eq (.Get "fullscreen") "true" }}
-    {{ $.Scratch.Add "width" "100%" }}
-    {{ $.Scratch.Add "height" "100%" }}
-    {{ $.Scratch.Add "position" "fixed" }}
-{{else}}
-    {{ $.Scratch.Add "width" (.Get "width" | default "500px") }}
-    {{ $.Scratch.Add "height" (.Get "height" | default "300px") }}
-    {{ $.Scratch.Add "position" "relative" }}
-{{end}}
-
+{{ $.Scratch.Add "width" (.Get "width" | default "500px") }}
+{{ $.Scratch.Add "height" (.Get "height" | default "300px") }}
 
 {{ if ne (.Get "no-fa") "true" }}
     <!-- FontAwesome -->
@@ -22,7 +14,7 @@
 
 <style>
 #slide-window {
-    position: {{ $.Scratch.Get "position" }};
+    position: relative;
     width: {{ $.Scratch.Get "width" }};
     height: {{ $.Scratch.Get "height" }};
     overflow: hidden;
@@ -61,7 +53,7 @@
 }
 
 .nav {
-    position: {{ $.Scratch.Get "position" }};
+    position: relative;
     z-index: 9;
     top: 45%;
     cursor: pointer;
