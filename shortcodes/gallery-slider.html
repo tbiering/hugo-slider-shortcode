@@ -1,6 +1,9 @@
 {{ $.Scratch.Add "width" (.Get "width" | default "500px") }}
 {{ $.Scratch.Add "height" (.Get "height" | default "300px") }}
 
+{{ $.Scratch.Add "arrow-left" (.Get "arrow-left" | default "fa-chevron-left") }}
+{{ $.Scratch.Add "arrow-right" (.Get "arrow-right" | default "fa-chevron-right") }}
+
 {{ if ne (.Get "no-fa") "true" }}
     <!-- FontAwesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -81,19 +84,17 @@
 <!-- Gallery -->
 <div id="slide-window">
     <ol id="slides-list" start="1">
-        {{- with (.Get "dir") -}} {{- $files := readDir (print "/static/" .) }} 
-        {{- range $files -}} 
-        {{- $isimg := lower .Name | findRE "\\.(gif|jpg|jpeg|tiff|png|bmp)" }}
-        {{- $linkURL := print ($.Get "dir") "/" .Name | absURL }}
-        <!-- absolute URL to hi-res image -->
-        <li class="slide" style="background-image:url({{ $linkURL }});"></li>
-        {{- end }} 
+        {{- with (.Get "dir") -}} 
+            {{- $files := readDir (print "/static/" .) }} 
+            {{- range $files -}} 
+                {{- $isimg := lower .Name | findRE "\\.(gif|jpg|jpeg|tiff|png|bmp)" }}
+                {{- $linkURL := print ($.Get "dir") "/" .Name | absURL }}
+                <li class="slide" style="background-image:url({{ $linkURL }});"></li>
+            {{- end }} 
         {{- end }}
-
     </ol>
-
-    <span class="nav fa fa-chevron-left fa-3x" id="left"></span>
-    <span class="nav fa fa-chevron-right fa-3x" id="right"></span>
+    <span class="nav fa {{ $.Scratch.Get "arrow-left" }} fa-3x" id="left"></span>
+    <span class="nav fa {{ $.Scratch.Get "arrow-right" }} fa-3x" id="right"></span>
 </div>
 
 <script>
