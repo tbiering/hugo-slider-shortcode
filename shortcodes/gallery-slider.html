@@ -83,13 +83,12 @@
 
 <!-- Gallery -->
 <div id="slide-window">
-    <ol id="slides-list" start="1">
+    <ol id="slides-list">
         {{- with (.Get "dir") -}} 
             {{- $files := readDir (print "/static/" .) }} 
             {{- range $files -}} 
-                {{- $isimg := lower .Name | findRE "\\.(gif|jpg|jpeg|tiff|png|bmp)" }}
-                {{- $linkURL := print ($.Get "dir") "/" .Name | absURL }}
-                <li class="slide" style="background-image:url({{ $linkURL }});"></li>
+                {{- $absoluteUrl := print ($.Get "dir") "/" .Name | absURL }}
+                <li class="slide" style="background-image:url({{ $absoluteUrl }});"></li>
             {{- end }} 
         {{- end }}
     </ol>
