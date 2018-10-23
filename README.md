@@ -23,6 +23,7 @@ Copy the file `gallery-slider.html` to the `/layouts/shortcodes` folder of your 
 | `arrow-right` | `fa-chevron-right` | Defines the right icon |
 | `no-fa` | `false` | Toggles dependency inclusion for FontAwesome |
 | `no-jquery` | `false` | Toggles dependency inclusion for JQuery |
+| `auto-slide` | `0` | Set automatic sliding duration in ms |
 
 #### Icons
 You may choose any icon from the FontAwesome CSS-classes listed here: http://fontawesome.io/icons/ 
@@ -37,6 +38,9 @@ You may choose any icon from the FontAwesome CSS-classes listed here: http://fon
 
 <!-- Set left and right icon -->
 {{< gallery-slider dir="/img/portfolio/" arrow-left="fa-angle-double-left" arrow-right="fa-angle-double-right" >}}
+
+<!-- Set automatic sliding duration -->
+{{< gallery-slider dir="/img/portfolio/" auto-slide="2000" >}}
 ```
 
 ### Libraries used
