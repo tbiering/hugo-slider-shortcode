@@ -1,5 +1,6 @@
 {{ $.Scratch.Add "width" (.Get "width" | default "500px") }}
 {{ $.Scratch.Add "height" (.Get "height" | default "300px") }}
+{{ $.Scratch.Add "auto-slide" (.Get "auto-slide" | default "0") }}
 
 {{ $.Scratch.Add "arrow-left" (.Get "arrow-left" | default "fa-chevron-left") }}
 {{ $.Scratch.Add "arrow-right" (.Get "arrow-right" | default "fa-chevron-right") }}
@@ -114,10 +115,12 @@ sliderJQuery(function( $ ) {
         $('#slides-list').css('width', totalSlidesWidth + 'px');
 
         $('#left').click(function () {
+            resetAutoSlide();
             performSlide('back');
         });
 
         $('#right').click(function () {
+            resetAutoSlide();
             performSlide('forward');
         });
 
@@ -151,5 +154,22 @@ sliderJQuery(function( $ ) {
 
         $.global.item = nextSlideId;
     }
+
+    {{ if ne (.Get "auto-slide") "0" }}
+      var autoSlide = parseInt({{ $.Scratch.Get "auto-slide" }}, 10);
+      var autoSlideInterval;
+      function resetAutoSlide(){
+        if(autoSlide) {
+          if(autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+          }
+          autoSlideInterval = setInterval(function(){
+            performSlide('forward');
+          }, autoSlide)
+        }
+      }
+      resetAutoSlide();
+
+    {{- end }}
 });
 </script>
